@@ -127,11 +127,4 @@ function moveOutcomes() {
   squares[currentSnake[0]].classList.add('snakeBody');
 
 
-  const app = sdk({
-    name: 'Snake Game',
-    description: 'A classic Snake game for Farcaster',
-    icon: '/path/to/icon.png',
-    version: '1.0.0',
-  });
-
 }

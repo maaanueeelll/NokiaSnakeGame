@@ -16,16 +16,17 @@ let direction = 1; //moves 1 step in any direction
 let score = 0; //initial Score Value
 let speed = 0.9; //snake speed
 //set interval duration time to move the snake 
-let intervalTime = 0; 
+let intervalTime = 0;
 let interval = 0;
 
 function letsStart() {
-  Swal.fire("Let's Start Playing...").then((result) => {
-    if (result.isConfirmed) {
-      //fire the start function Here
-      gameStart();
-    }
-  });
+// Swal.fire("Let's Start Playing...").then((result) => {
+//   if (result.isConfirmed) {
+//     //fire the start function Here
+//     gameStart();
+//   }
+// });
+gameStart();
 }
 
 function gameOver() {
@@ -88,13 +89,13 @@ function gameStart() {
   interval = setInterval(moveOutcomes, intervalTime);
 }
 
- //function that deals with ALL the ove outcomes of the Snake
- function moveOutcomes() {
+//function that deals with ALL the ove outcomes of the Snake
+function moveOutcomes() {
 
   //1-deals with snake hitting border and snake hitting self {Game-over}
   if (
-    (currentSnake[0] + width >= (width * width) && direction === width ) || //if snake hits bottom
-    (currentSnake[0] % width === width -1 && direction === 1) || //if snake hits right wall
+    (currentSnake[0] + width >= (width * width) && direction === width) || //if snake hits bottom
+    (currentSnake[0] % width === width - 1 && direction === 1) || //if snake hits right wall
     (currentSnake[0] % width === 0 && direction === -1) || //if snake hits left wall
     (currentSnake[0] - width < 0 && direction === -width) ||  //if snake hits the top
     squares[currentSnake[0] + direction].classList.contains('snakeBody') //if snake goes into itself
@@ -106,23 +107,31 @@ function gameStart() {
   const tail = currentSnake.pop(); //removes last item of the array
   squares[tail].classList.remove('snakeBody');  //removes class of snake from the TAIL {clear last part of the snake from grid when it moves}
   currentSnake.unshift(currentSnake[0] + direction); //gives/push direction to the head of the array
-  scoreDisplay.classList.remove('animate__animated','animate__bounceIn'); //remove the animation class for increasing the score
+  scoreDisplay.classList.remove('animate__animated', 'animate__bounceIn'); //remove the animation class for increasing the score
 
   //2-deals with snake getting/eating the apple
-  if(squares[currentSnake[0]].classList.contains('appleBlock')) {
+  if (squares[currentSnake[0]].classList.contains('appleBlock')) {
     squares[currentSnake[0]].classList.remove('appleBlock'); //remove the apple from the grid
     squares[tail].classList.add('snakeBody'); //increase the snake body
-    currentSnake.push(tail); 
+    currentSnake.push(tail);
     randomAppleGenerate(); //generate new random Apple
-    score++ ; //increase the score
+    score++; //increase the score
     //scoreDisplay.textContent = score ; 
     //setTimeout(() => scoreDisplay.textContent = score, 250); //show the new score on Screen with small animation
-    scoreDisplay.classList.add('animate__animated','animate__bounceIn'); //add the animation class for increasing the score
-    scoreDisplay.textContent = score ; 
+    scoreDisplay.classList.add('animate__animated', 'animate__bounceIn'); //add the animation class for increasing the score
+    scoreDisplay.textContent = score;
     clearInterval(interval); //clear the time interval
     intervalTime = intervalTime * speed; //increase the speed of snake velocity
     interval = setInterval(moveOutcomes, intervalTime); //pass new data to reset the interval values
   }
   squares[currentSnake[0]].classList.add('snakeBody');
-  
+
+
+  const app = sdk({
+    name: 'Snake Game',
+    description: 'A classic Snake game for Farcaster',
+    icon: '/path/to/icon.png',
+    version: '1.0.0',
+  });
+
 }
